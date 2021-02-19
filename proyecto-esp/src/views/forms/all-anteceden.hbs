@@ -1,0 +1,27 @@
+<div class="row">
+    {{#each antecedent}}
+         <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 >
+                     {{ antecedentes}} <a href="/forms/edit/{{_id}}"><i class="fas fa-edit"></i></a>
+                    </h4>
+                    <p> {{ antecedentesPaciente }}</p>
+                   <form action="/forms/delete/{{_id}}?_method=DELETE" method="POST">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger btn-block btn-sm" type="submit"> Borrar </button>
+                   </form>
+                </div>
+
+            </div>
+        </div>
+    {{else}}
+        <div class="card mx-auto">
+            <div class="card-body">
+             <p class="lead">No se encuentran antecedentes.</p>
+                <a href="/" class="btn btn-success btn-block">Crea un antecedente</a>
+             </div>
+        </div>
+
+    {{/each}}
+</div>
