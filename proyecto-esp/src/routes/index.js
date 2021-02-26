@@ -45,7 +45,7 @@ router.get('/antecedentes', async (req, res)=> {
    console.log(antecedent);
 });
 
-router.get('/forms/edit:id',async (req,res) => {
+router.get('/forms/edit/:id',async (req,res) => {
     const ejAntecedente= await Antecedentes.findById(req.params.id);
     res.render('forms/edit-antecedent',{ejAntecedente});
 });
