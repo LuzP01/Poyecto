@@ -1,23 +1,50 @@
+<h2>Identificación del caso</h2>
 
-<div class="col-md-4 mx-auto">
-    <div class="card">
-        <div class="card-header">
-            <h3>Identificación del caso</h3>
+
+<h4>Antecendentes generales</h4>
+
+<form class="/forms/new-form" method="POST">
+   
+        <div class="form-group col-md-4">
+            <input type="text" name="fecha" class="form-control" placeholder="Fecha notificación" autofocus>
+            
         </div>
-        <div class="card-body">
-            <form action="/forms/new-form" method="POST">
-                <div class="form-group">
-                    <input type="text" name="antecedentes" class="form-control" placeholder="Antecedentes generales"
-                        autofocus>
-                </div>
-                <div class="form-group">
-                    <textarea name="antecedentesPaciente" class="form-control"
-                        placeholder="Antecedentes del paciente"></textarea>
-                </div>
-                <div>
-                    <button class="btn btn-primary btn-block" type="submit">Enviar</button>
-                </div>
-            </form>
+    
+    
+        <div class="form-group col-md-4 ">
+            <input type="text" name="semana" class="form-control" placeholder="Semana epidemiológica" autofocus>
         </div>
+    
+    <div class="form-floating col-md-4">
+        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+            <option selected>Seleccionar</option>
+            <option value="1">Sospechoso</option>
+            <option value="2">Confirmado</option>
+        </select>
+        <label for="floatingSelect">Etapa clínica del caso</label>
     </div>
-</div>
+    <div class="form-group col-md-4">
+        <input type="text" name="establecimiento" class="form-control" placeholder="Establecimiento de salud" autofocus>
+    </div>
+    <h4>Antecedentes del Paciente</h4>
+    <div class="form-group col-md-4">
+        <input type="text" name="identificacion" class="form-control" placeholder="Número de identificación" autofocus>
+    </div>
+    <div class="form-group col-md-4">
+        <input type="text" name="nombre" class="form-control" placeholder="Nombre y Apellidos" autofocus>
+    </div>
+    <div class="form-floating col-md-4">
+        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+            <option selected>Seleccionar</option>
+            <option value="1">Vivo</option>
+            <option value="2">Fallecido</option>
+        </select>
+        <label for="floatingSelect">Estado del paciente</label>
+    </div>
+    <div class="form-group col-md-4">
+        <input type="text" name="fechaNacimiento" class="form-control" placeholder="Fecha de nacimiento" autofocus>
+    </div>
+    <div>
+        <button class="btn btn-primary btn-block" type="submit">Enviar</button>
+    </div>
+</form>
