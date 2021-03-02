@@ -40,14 +40,24 @@ router.post('/forms/new-form', async (req,res)=> {
     
 });
 router.get('/antecedentes', async (req, res)=> {
-   const antecedent = await Antecedentes.find().sort({date: 'desc'});
-   res.render('forms/all-anteceden', { antecedent });
-   console.log(antecedent);
+   const antecedent = await Antecedentes.find().then(Antecedentes => {
+       const contexto = {
+           antecedent: Antecedentes.map(Antecedentes => {
+               return{
+                  antecedentes: Antecedentes.antecedentes,
+                  antecedentesPaciente: Antecedentes.antecedentesPaciente 
+               }
+           })
+       }
+       res.render('forms/all-anteceden', { antecedent: contexto.antecedent });
+   })
 });
 
 router.get('/forms/edit/:id',async (req,res) => {
-    const ejAntecedente= await Antecedentes.findById(req.params.id);
-    res.render('forms/edit-antecedent',{ejAntecedente});
+    const id = req.params.id;
+    const editAntece= await Antecedentes.findById(id);
+    console.long(id);
+    res.render('forms/edit-antecedent',{antecedentes: editAntece.antecedentes, antecedentesPaciente: editAntece.antecedentesPaciente, _id:editAntece._id}); 
 });
 router.put('/forms/edit-antecedent/:id', async (req,res) => {
  const {antecedentes, antecedentesPaciente} = req.body;
