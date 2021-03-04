@@ -17,12 +17,12 @@
                         <td > {{this.antecedentes}} </td>
                         <td>
                              <h4>
-                                <a href="/forms/edit/{{_id}}" class="btn btn-info btn-block btn-sm" >Editar</a>
+                                <a href="/forms/edit/'{{_id}}'" class="btn btn-info btn-block btn-sm" >Editar</a>
                             </h4>
                         </td>
                         <td>
                           
-                            <form action="/forms/delete/{{_id}}?_method=DELETE" method="POST">
+                            <form action="/forms/delete/'{{_id}}'?_method=DELETE" method="POST">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button class="btn btn-danger btn-block btn-sm" type="submit"> Borrar </button>
                             </form>

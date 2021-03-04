@@ -45,7 +45,8 @@ router.get('/antecedentes', async (req, res)=> {
            antecedent: Antecedentes.map(Antecedentes => {
                return{
                   antecedentes: Antecedentes.antecedentes,
-                  antecedentesPaciente: Antecedentes.antecedentesPaciente 
+                  antecedentesPaciente: Antecedentes.antecedentesPaciente,
+                  _id: Antecedentes._id
                }
            })
        }
@@ -54,10 +55,14 @@ router.get('/antecedentes', async (req, res)=> {
 });
 
 router.get('/forms/edit/:id',async (req,res) => {
-    const id = req.params.id;
-    const editAntece= await Antecedentes.findById(id);
-    console.long(id);
-    res.render('forms/edit-antecedent',{antecedentes: editAntece.antecedentes, antecedentesPaciente: editAntece.antecedentesPaciente, _id:editAntece._id}); 
+    await Antecedentes.findById(req.params.id).then(Antecedentes=>{
+        const context={
+            antecedentes: Antecedentes.antecedentes,
+            antecedentesPaciente: Antecedentes.antecedentesPaciente
+        }
+        res.render('forms/edit-antecedent.hbs',{antecede:context}); 
+    })
+   
 });
 router.put('/forms/edit-antecedent/:id', async (req,res) => {
  const {antecedentes, antecedentesPaciente} = req.body;
