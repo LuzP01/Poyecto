@@ -7,11 +7,8 @@ const AntecedenteSchema = new Schema({
     antecedentesPaciente: {type: String, required: true},
     date:{ type: Date, default: Date.now},
     user:{ type: Schema.ObjectId , ref: "User"}
+
 });
 
 module.exports = mongoose.model('Antecendentes', AntecedenteSchema);
 
-
-
-
-//const antecedent = await Antecedentes.find().sort({date: 'desc'});

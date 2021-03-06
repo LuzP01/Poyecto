@@ -1,78 +1,86 @@
 const { request } = require('express');
 const express = require('express');
 const router = express.Router();
-const Antecedentes= require('../models/Antecedentes');
+const Antecedentes = require('../models/Antecedentes');
 
 
-router.get('/', (req, res) =>{
+router.get('/', (req, res) => {
     res.render('forms/new-form');
 });
 
-router.get('/about', (req, res) =>{
-    res.render('about');
-});
 
-router.post('/forms/new-form', async (req,res)=> {
-    const { antecedentes, antecedentesPaciente}= req.body;
-    const errors= [];
-    if ( !antecedentes || !antecedentesPaciente) {
-        errors.push({text: 'por favor agregar los antecentes generales o antecendentes del paciente '});
+router.post('/forms/new-form', async (req, res) => {
+    const { antecedentes, antecedentesPaciente } = req.body;
+    const errors = [];
+    console.log(antecedentes);
+    console.log(antecedentesPaciente);
+    if (!antecedentes || !antecedentesPaciente) {
+        errors.push({ text: 'por favor agregar los antecentes generales o antecendentes del paciente ' });
     }
-    if ( !antecedentesPaciente){
-        errors.push({text: 'por favor agregar los antecedentes del paciente'});
+    if (!antecedentesPaciente) {
+        errors.push({ text: 'por favor agregar los antecedentes del paciente' });
     }
-    if (errors.length > 0){
-        res.render('forms/new-form',{
+    if (errors.length > 0) {
+        res.render('forms/new-form', {
             errors,
             antecedentes,
             antecedentesPaciente
-            
+
         });
     } else {
-        const antecedentes1 =  new Antecedentes({antecedentes,antecedentesPaciente});
+        const antecedentes1 = new Antecedentes({ antecedentes, antecedentesPaciente });
         await antecedentes1.save();
-        console.log(antecedentes);
-        console.log(antecedentesPaciente);
+        console.log(antecedentes1);
         req.flash('success_msg', 'Antecedente Agregado');
         res.redirect('/antecedentes');
 
     }
-    
+
 });
-router.get('/antecedentes', async (req, res)=> {
-   const antecedent = await Antecedentes.find().then(Antecedentes => {
-       const contexto = {
-           antecedent: Antecedentes.map(Antecedentes => {
-               return{
-                  antecedentes: Antecedentes.antecedentes,
-                  antecedentesPaciente: Antecedentes.antecedentesPaciente,
-                  _id: Antecedentes._id
-               }
-           })
-       }
-       res.render('forms/all-anteceden', { antecedent: contexto.antecedent });
-   })
+router.get('/antecedentes', async (req, res) => {
+    const antecedent = await Antecedentes.find().then(Antecedentes => {
+        const contexto = {
+            antecedent: Antecedentes.map(Antecedentes => {
+                return {
+                    antecedentes: Antecedentes.antecedentes,
+                    antecedentesPaciente: Antecedentes.antecedentesPaciente,
+                    _id: Antecedentes.id
+                }
+            })
+
+        }
+        res.render('forms/all-anteceden', { antecedent: contexto.antecedent });
+    })
+
+
 });
 
-router.get('/forms/edit/:id',async (req,res) => {
-    await Antecedentes.findById(req.params.id).then(Antecedentes=>{
-        const context={
-            antecedentes: Antecedentes.antecedentes,
-            antecedentesPaciente: Antecedentes.antecedentesPaciente
-        }
-        res.render('forms/edit-antecedent.hbs',{antecede:context}); 
-    })
-   
+router.get('/forms/edit/:id', async (req, res) => {
+  const antece= await Antecedentes.findById(req.params.id).lean();
+  res.render("forms/edit-antecedent",{antece})
+
 });
-router.put('/forms/edit-antecedent/:id', async (req,res) => {
- const {antecedentes, antecedentesPaciente} = req.body;
- await Antecedentes.findByIdAndUpdate(req.params.id,{antecedentes,antecedentesPaciente})
- req.flash('success_msg','antecedente actualizado');
- res.redirect('/antecedentes');
-});
-router.delete('/forms/delete/:id',async (req,res) => {
-    await Antecedentes.findByIdAndDelete(req.params.id);
-    req.flash('success_msg', 'antecededente borrado');
+router.put('/forms/edit-antecedent/:id', async (req, res) => {
+    const { antecedentes, antecedentesPaciente } = req.body;
+    await Antecedentes.findByIdAndUpdate(req.params.id, { antecedentes, antecedentesPaciente });
+    req.flash('success_msg', 'antecedente actualizado');
+    console.log("editar");
     res.redirect('/antecedentes');
+});
+router.delete('/forms/delete/:id', async (req, res) => {
+    await Antecedentes.findByIdAndDelete(req.params.id).then(Antecedentes => {
+        const cont = {
+
+            antecedentes: Antecedentes.antecedentes,
+            antecedentesPaciente: Antecedentes.antecedentesPaciente,
+            _id: Antecedentes._id
+
+        }
+        req.flash('success_msg', 'antecededente borrado');
+        res.redirect('/antecedentes');
+        console.log("eliminar")
+    })
+
+
 });
 module.exports = router;

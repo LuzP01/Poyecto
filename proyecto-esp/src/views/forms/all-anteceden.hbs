@@ -1,5 +1,8 @@
 <div class="row">
     {{#each antecedent}}
+    <div>
+        <a class="btn btn-warning btn-block btn-sm mt-3" href="/">Agregar</a>
+    </div>
     <div class="text-center row d-flex justify-content-center mt-4">
         <div class="card col-10">
             <table class=" table">
@@ -14,16 +17,15 @@
                 <tbody>
                     <tr>
                         <th scope="row"></th>
-                        <td > {{this.antecedentes}} </td>
+                        <td> {{antecedentes}} </td>
                         <td>
-                             <h4>
-                                <a href="/forms/edit/'{{_id}}'" class="btn btn-info btn-block btn-sm" >Editar</a>
+                            <h4>
+                                <a href="/forms/edit/{{_id}}" class="btn btn-info btn-block btn-sm">Editar</a>
                             </h4>
                         </td>
                         <td>
-                          
-                            <form action="/forms/delete/'{{_id}}'?_method=DELETE" method="POST">
-                                <input type="hidden" name="_method" value="DELETE">
+
+                            <form action="/forms/delete/{{_id}}?_method=DELETE" method="POST">
                                 <button class="btn btn-danger btn-block btn-sm" type="submit"> Borrar </button>
                             </form>
                         </td>
